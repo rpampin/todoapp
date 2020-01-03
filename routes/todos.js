@@ -20,7 +20,7 @@ router.get('/:id', function (req, res) {
   });
 });
 
-router.post('/add', function (req, res) {
+router.post('/create', function (req, res) {
   let todo = new Todo(req.body);
   todo.save()
     .then(todo => {
