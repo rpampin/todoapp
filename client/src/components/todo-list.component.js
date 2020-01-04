@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const Todo = props => (
   <tr>
-    <th>[]</th>
+    <th>[{props.item.completed ? 'x' : ' '}]</th>
     <td className={props.item.completed ? 'completed' : ''}>{props.item.description}</td>
     <td className={props.item.completed ? 'completed' : ''}>{props.item.priority}</td>
     <td>Edit</td>

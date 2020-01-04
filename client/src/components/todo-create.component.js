@@ -31,7 +31,7 @@ export default class TodoCreate extends React.Component {
 
   completedOnChange(e) {
     this.setState({
-      completed: e.target.value
+      completed: !this.state.completed
     });
   }
 
@@ -58,7 +58,7 @@ export default class TodoCreate extends React.Component {
           <input type="radio" name="lowPriority" id="lowPriority" checked={this.state.priority === 'Low'} value="Low" onChange={this.priorityOnChhange} /> Low
           <input type="radio" name="mediumPriority" id="mediumPriority" checked={this.state.priority === 'Medium'} value="Medium" onChange={this.priorityOnChhange} /> Medium
           <input type="radio" name="highPriority" id="highPriority" checked={this.state.priority === 'High'} value="High" onChange={this.priorityOnChhange} /> High
-          <input type="checkbox" name="completed" id="completed" value={this.state.completed} onChange={this.completedOnChange}/> Completed
+          <input type="checkbox" name="completed" id="completed" checked={this.state.completed} onChange={this.completedOnChange}/> Completed
           <button type="submit">Create</button>
         </form>
       </div>

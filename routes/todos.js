@@ -14,8 +14,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/:id', function (req, res) {
-  let id = req.params.id;
-  Todo.findById(id, function (err, todo) {
+  Todo.findById(req.params.id, function (err, todo) {
     res.json(todo);
   });
 });
@@ -48,6 +47,22 @@ router.post('/update/:id', function (req, res) {
         });
     }
   });
+});
+
+router.delete('/:id', function (req, res) {
+  Todo.findById(req.params.id, function (err, todo) {
+    if (!todo)
+      res.status(404).send("data is not found");
+    else {
+      todo.delete().then(todo => {
+        res.json('Todo deleted!');
+      })
+      .catch(err => {
+        res.status(400).send('Delete not possible');
+      });
+    }
+  });
+
 });
 
 module.exports = router;
