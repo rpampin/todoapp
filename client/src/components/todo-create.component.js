@@ -52,7 +52,7 @@ export default class TodoCreate extends React.Component {
     return (
       <div>
         <h1>CreateTodo</h1>
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit} autoComplete="off">
           <label htmlFor="description">Description</label>
           <input type="text" name="description" id="description" value={this.state.description} onChange={this.descriptionOnChange} />
           <input type="radio" name="lowPriority" id="lowPriority" checked={this.state.priority === 'Low'} value="Low" onChange={this.priorityOnChhange} /> Low
