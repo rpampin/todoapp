@@ -19,7 +19,7 @@ router.get('/:id', function (req, res) {
   });
 });
 
-router.post('/create', function (req, res) {
+router.post('/', function (req, res) {
   let todo = new Todo(req.body);
   todo.save()
     .then(todo => {
@@ -30,7 +30,23 @@ router.post('/create', function (req, res) {
     });
 });
 
-router.post('/update/:id', function (req, res) {
+router.post('/completed/:id', function (req, res) {
+  Todo.findById(req.params.id, function (err, todo) {
+    if (!todo)
+      res.status(400).send("data is not found");
+    else {
+      todo.completed = !todo.completed;
+      todo.save().then(todo => {
+        res.json('Todo updated!');
+      })
+        .catch(err => {
+          res.status(400).send("Update not possible");
+        });
+    }
+  });
+});
+
+router.post('/:id', function (req, res) {
   Todo.findById(req.params.id, function (err, todo) {
     if (!todo)
       res.status(404).send("data is not found");
@@ -57,9 +73,9 @@ router.delete('/:id', function (req, res) {
       todo.delete().then(todo => {
         res.json('Todo deleted!');
       })
-      .catch(err => {
-        res.status(400).send('Delete not possible');
-      });
+        .catch(err => {
+          res.status(400).send('Delete not possible');
+        });
     }
   });
 

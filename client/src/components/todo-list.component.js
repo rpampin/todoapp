@@ -7,6 +7,7 @@ export default class TodoList extends React.Component {
     super(props);
 
     this.deleteTodo = this.deleteTodo.bind(this);
+    this.completeTodo = this.completeTodo.bind(this);
 
     this.state = { todos: [] };
   }
@@ -23,21 +24,38 @@ export default class TodoList extends React.Component {
 
   todoList() {
     return this.state.todos.map((item, index) => {
-      return <TodoItem item={item} onDelete={this.deleteTodo} key={index} />
+      return <TodoItem
+        onCompleted={this.completeTodo}
+        onDelete={this.deleteTodo}
+        item={item}
+        key={index} />
     });
   }
 
+  completeTodo(todoId) {
+    axios.post('/todos/completed/' + todoId)
+      .then(response => {
+        const todos = this.state.todos;
+        const itemIndex = todos.findIndex(item => item._id === todoId);
+        todos[itemIndex].completed = !todos[itemIndex].completed;
+        this.setState({ todos: todos })
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
+
   deleteTodo(todoId) {
-    console.log('DELETING!!');
-    // axios.delete('/' + todoId)
-    // .then(response => {
-    //   let toRemove = this.state.todos.filter(item => item._id == todoId)[0];
-    //   let toRemoveIndex = this.state.todos.indexOf(toRemove);
-    //   this.setState({ todos: this.state.todos.splice(toRemoveIndex, 1) });
-    // })
-    // .catch(function (err) {
-    //   console.log(err);
-    // });
+    axios.delete('/todos/' + todoId)
+    .then(response => {
+      let todos = this.state.todos;
+      const itemIndex = todos.findIndex(item => item._id === todoId);
+      todos.splice(itemIndex, 1);
+      this.setState({ todos: todos });
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
   }
 
   render() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-export default class TodoCreate extends React.Component {
+export default class TodoEdit extends React.Component {
   constructor(props) {
     super(props);
 
@@ -15,6 +15,20 @@ export default class TodoCreate extends React.Component {
       priority: '',
       completed: false
     }
+  }
+
+  componentDidMount() {
+    axios.get('/todos/' + this.props.match.params.id)
+      .then(response => {
+        this.setState({
+          description: response.data.description,
+          priority: response.data.priority,
+          completed: response.data.completed
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
   }
 
   descriptionOnChange(e) {
@@ -38,7 +52,7 @@ export default class TodoCreate extends React.Component {
   onSubmit(e) {
     e.preventDefault();
 
-    axios.post('/todos', {
+    axios.post('/todos/' + this.props.match.params.id, {
       description: this.state.description,
       priority: this.state.priority,
       completed: this.state.completed
@@ -51,14 +65,14 @@ export default class TodoCreate extends React.Component {
   render() {
     return (
       <div>
-        <h1>CreateTodo</h1>
+        <h1>Edit Todo</h1>
         <form onSubmit={this.onSubmit} autoComplete="off">
           <label htmlFor="description">Description</label>
           <input type="text" name="description" id="description" value={this.state.description} onChange={this.descriptionOnChange} />
           <input type="radio" name="lowPriority" id="lowPriority" checked={this.state.priority === 'Low'} value="Low" onChange={this.priorityOnChhange} /> Low
           <input type="radio" name="mediumPriority" id="mediumPriority" checked={this.state.priority === 'Medium'} value="Medium" onChange={this.priorityOnChhange} /> Medium
           <input type="radio" name="highPriority" id="highPriority" checked={this.state.priority === 'High'} value="High" onChange={this.priorityOnChhange} /> High
-          <input type="checkbox" name="completed" id="completed" checked={this.state.completed} onChange={this.completedOnChange}/> Completed
+          <input type="checkbox" name="completed" id="completed" checked={this.state.completed} onChange={this.completedOnChange} /> Completed
           <button type="submit">Create</button>
         </form>
       </div>
