@@ -1,5 +1,15 @@
 import React from 'react';
 import axios from 'axios';
+
+import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
 import TodoItem from './todo-item.component';
 
 export default class TodoList extends React.Component {
@@ -47,33 +57,37 @@ export default class TodoList extends React.Component {
 
   deleteTodo(todoId) {
     axios.delete('/todos/' + todoId)
-    .then(response => {
-      let todos = this.state.todos;
-      const itemIndex = todos.findIndex(item => item._id === todoId);
-      todos.splice(itemIndex, 1);
-      this.setState({ todos: todos });
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
+      .then(response => {
+        let todos = this.state.todos;
+        const itemIndex = todos.findIndex(item => item._id === todoId);
+        todos.splice(itemIndex, 1);
+        this.setState({ todos: todos });
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
   }
 
   render() {
     return (
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>Description</th>
-            <th>Priority</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.todoList()}
-        </tbody>
-      </table>
+      <div>
+        <Typography variant="h4">Todo List</Typography>
+        <TableContainer component={Paper}>
+          <Table aria-label="todo list" size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell></TableCell>
+                <TableCell>Description</TableCell>
+                <TableCell>Priority</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.todoList()}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     )
   }
 }

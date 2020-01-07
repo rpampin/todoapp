@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import Typography from '@material-ui/core/Typography';
+
 import TodoForm from './todo-form.component';
 
 export default class TodoEdit extends React.Component {
@@ -45,7 +47,7 @@ export default class TodoEdit extends React.Component {
     console.log('rendering');
     return (
       <div>
-        <h1>Edit Todo</h1>
+        <Typography variant="h4">Edit Todo</Typography>
         <TodoForm onSubmit={this.onSubmit} todo={this.state.todo} />
       </div>
     )

@@ -1,5 +1,13 @@
 import React from 'react';
 
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControl from '@material-ui/core/FormControl';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 export default class TodoForm extends React.Component {
   constructor(props) {
     super(props);
@@ -54,6 +62,7 @@ export default class TodoForm extends React.Component {
   }
 
   onSubmit(e) {
+    console.log('Hello!');
     e.preventDefault();
 
     this.props.onSubmit({
@@ -65,15 +74,23 @@ export default class TodoForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit} autoComplete="off">
-        <label htmlFor="description">Description</label>
-        <input type="text" name="description" id="description" value={this.state.description} onChange={this.descriptionOnChange} />
-        <input type="radio" name="lowPriority" id="lowPriority" checked={this.state.priority === 'Low'} value="Low" onChange={this.priorityOnChhange} /> Low
-          <input type="radio" name="mediumPriority" id="mediumPriority" checked={this.state.priority === 'Medium'} value="Medium" onChange={this.priorityOnChhange} /> Medium
-          <input type="radio" name="highPriority" id="highPriority" checked={this.state.priority === 'High'} value="High" onChange={this.priorityOnChhange} /> High
-          <input type="checkbox" name="completed" id="completed" checked={this.state.completed} onChange={this.completedOnChange} /> Completed
-          <button type="submit">Create</button>
-      </form>
+      <FormControl>
+        <TextField required id="description" label="Description" aria-label="description"
+          value={this.state.description} onChange={this.descriptionOnChange} />
+        <RadioGroup aria-label="priority" name="priority"
+          row value={this.state.priority} onChange={this.priorityOnChhange} required>
+          <FormControlLabel value="Low" control={<Radio />} label="Low" />
+          <FormControlLabel value="Medium" control={<Radio />} label="Medium" />
+          <FormControlLabel value="High" control={<Radio />} label="High" />
+        </RadioGroup>
+        <FormControlLabel label="Completed" aria-label="completed" control={
+          <Checkbox
+            checked={this.state.completed}
+            onChange={this.completedOnChange}
+          />}
+        />
+        <Button variant="contained" color="primary" aria-label="save" onClick={this.onSubmit}>Save</Button>
+      </FormControl>
     )
   }
 }
