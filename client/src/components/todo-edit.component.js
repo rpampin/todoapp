@@ -46,7 +46,7 @@ export default class TodoEdit extends React.Component {
   render() {
     console.log('rendering');
     return (
-      <div>
+      <div style={{ display: "grid", justifyItems: "center" }}>
         <Typography variant="h4">Edit Todo</Typography>
         <TodoForm onSubmit={this.onSubmit} todo={this.state.todo} />
       </div>

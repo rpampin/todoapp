@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -8,7 +9,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-export default class TodoForm extends React.Component {
+class TodoForm extends React.Component {
   constructor(props) {
     super(props);
     this.descriptionOnChange = this.descriptionOnChange.bind(this);
@@ -73,11 +74,13 @@ export default class TodoForm extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <FormControl>
+      <FormControl className={classes.form}>
         <TextField required id="description" label="Description" aria-label="description"
           value={this.state.description} onChange={this.descriptionOnChange} />
-        <RadioGroup aria-label="priority" name="priority"
+        <RadioGroup aria-label="priority" name="priority" className={classes.priority}
           row value={this.state.priority} onChange={this.priorityOnChhange} required>
           <FormControlLabel value="Low" control={<Radio />} label="Low" />
           <FormControlLabel value="Medium" control={<Radio />} label="Medium" />
@@ -94,3 +97,21 @@ export default class TodoForm extends React.Component {
     )
   }
 }
+
+const styles = theme => ({
+  form: {
+    width: "50%",
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+    }
+  },
+  priority: {
+    display: "flex",
+    [theme.breakpoints.down('xs')]: {
+      display: "flex",
+      flexDirection: "column"
+    }
+  }
+});
+
+export default withStyles(styles)(TodoForm);

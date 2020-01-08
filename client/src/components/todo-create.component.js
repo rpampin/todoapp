@@ -24,7 +24,7 @@ export default class TodoCreate extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ display: "grid", justifyItems: "center" }}>
         <Typography variant="h4">Create Todo</Typography>
         <TodoForm onSubmit={this.onSubmit} />
       </div>
