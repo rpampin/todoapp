@@ -76,10 +76,11 @@ export default class TodoList extends React.Component {
           <Table aria-label="todo list" size="small">
             <TableHead>
               <TableRow>
-                <TableCell></TableCell>
+                <TableCell style={{ width: 82 }}></TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Priority</TableCell>
-                <TableCell></TableCell>
+                <TableCell style={{ width: 48, padding: 0 }}></TableCell>
+                <TableCell style={{ width: 48 }}></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

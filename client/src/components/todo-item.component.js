@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 
 const TodoItem = props => (
   <TableRow key={props._id}>
-    <TableCell component="th" scope="row">
+    <TableCell style={{ width: 82 }}>
       <Checkbox
         checked={props.item.completed}
         onChange={() => props.onCompleted(props.item._id)}
@@ -22,11 +22,13 @@ const TodoItem = props => (
     <TableCell className={props.item.completed ? 'completed' : ''}>
       {props.item.priority}
     </TableCell>
-    <TableCell align="right">
+    <TableCell style={{ width: 48, padding: 0 }}>
       <IconButton color="inherit" component={Link} to={'/edit/' + props.item._id}>
         <EditIcon />
       </IconButton>
-      <IconButton color="inherit">
+    </TableCell>
+    <TableCell style={{ width: 48 }}>
+      <IconButton color="inherit" onClick={() => props.onDelete(props.item._id)}>
         <DeleteIcon />
       </IconButton>
     </TableCell>
