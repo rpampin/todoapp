@@ -1,11 +1,15 @@
 {
+  "homepage": "http://rpampin.github.io/todoapp",
   "name": "todoapp",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./server.js",
     "start-watch": "nodemon --ignore 'client/' ./server.js",
-    "dev": "concurrently \"npm run start-watch\" \"cd client && npm i && npm start\""
+    "dev": "concurrently \"npm run start-watch\" \"cd client && npm i && npm start\"",
+    "build": "mkdirp build/client && cpx \"*.js\" build && cd client && npm i && npm run build && cd ../ && ncp ./client/build ./build/client",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "concurrently": "^5.0.2",
@@ -16,5 +20,11 @@
     "mongoose": "^5.8.4",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.2"
+  },
+  "devDependencies": {
+    "cpx": "^1.5.0",
+    "gh-pages": "^2.2.0",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0"
   }
 }
